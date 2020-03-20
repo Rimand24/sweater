@@ -1,3 +1,4 @@
+<#macro page>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -5,9 +6,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div>Hello, user</div>
 <div>
-<a href="/main">Main page</a>
+    <#nested>
 </div>
 </body>
 </html>
+</#macro>
