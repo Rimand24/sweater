@@ -1,8 +1,10 @@
 package edu.rimand.controller;
 
 import edu.rimand.domain.Message;
+import edu.rimand.domain.User;
 import edu.rimand.repository.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,8 +30,12 @@ public class MainController {
     }
 
     @PostMapping ("/main")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model){
-        Message msg = new Message(text, tag);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag,
+            Map<String, Object> model){
+        Message msg = new Message(user, text, tag);
         messageRepo.save(msg);
         Iterable<Message> messages = messageRepo.findAll();
         model.put("messages", messages);

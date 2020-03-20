@@ -1,42 +1,5 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html>-->
-<!--<head>-->
-<!--    <title>Spring maain Example </title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div>-->
-<!--    <form action="/logout" method="post">-->
-<!--        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>-->
-<!--        <div><input type="submit" value="Sign out"/></div>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!--<div>-->
-<!--    <form method="post">-->
-<!--        <input type="text" name="text" placeholder="input text">-->
-<!--        <input type="text" name="tag" placeholder="input tag">-->
-<!--        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>-->
-<!--        <button type="submit">add</button>-->
-<!--    </form>-->
-<!--    <form method="post" action="filter">-->
-<!--        <input type="text" name="filter" placeholder="input filter">-->
-<!--        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>-->
-<!--        <button type="submit">filter</button>-->
-<!--    </form>-->
-<!--</div>-->
-<!--<div> msg list</div>-->
-<!--    {{#messages}}-->
-<!--    <div>-->
-<!--        <b>{{id}}</b>-->
-<!--        <span>{{text}}</span>-->
-<!--        <i>{{tag}}</i>-->
-<!--    </div>-->
-<!--    {{/messages}}-->
-<!--</body>-->
-<!--</html>-->
-
+<!DOCTYPE HTML>
 <html>
-
 <body>
 <div>
     <form action="/logout" method="post">
@@ -46,23 +9,29 @@
 </div>
 <div>
     <form method="post">
-        <input type="text" name="text" placeholder="Введите сообщение" />
-        <input type="text" name="tag" placeholder="Тэг">
+        <input type="text" name="text" placeholder="text here" />
+        <input type="text" name="tag" placeholder="tag here">
         <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <button type="submit">Добавить</button>
+        <button type="submit">Add</button>
     </form>
 </div>
-<div>Список сообщений</div>
+<div>Message List</div>
 <form method="post" action="filter">
     <input type="text" name="filter">
     <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-    <button type="submit">Найти</button>
+    <button type="submit">Set Tag Filter</button>
+</form>
+<form method="post" action="filter">
+    <input type="text" name="filter">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    <button type="submit">Set Author Filter</button>
 </form>
 {{#messages}}
     <div>
         <b>{{id}}</b>
         <span>{{text}}</span>
         <i>{{tag}}</i>
+        <strong>{{authorName}}</strong>
     </div>
 {{/messages}}
 </body>

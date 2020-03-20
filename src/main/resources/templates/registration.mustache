@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spring Security Example </title>
+    <title>Tweater - registration</title>
 </head>
 <body>
-Registration page
-{{#message}}{{message}}{{/message}}
+<div>Registration page</div>
+<div>{{#message}}{{message}}{{/message}}</div>
+<div>
 <form action="/registration" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
     <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
     <div><input type="submit" value="Sign In"/></div>
 </form>
+</div>
 </body>
 </html>
