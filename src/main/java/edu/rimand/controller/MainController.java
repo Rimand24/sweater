@@ -36,16 +36,6 @@ public class MainController {
         return "main";
     }
 
-//    private  Iterable<Message> responseFilter(String filter){
-//        Iterable<Message> messages;
-//        if (filter.equals("tagFilter")) messages = messageRepo.findByTag(filter);
-//        else if (filter.equals("authorFilter")) messages = messageRepo.findByTag(filter);
-//        else messages = messageRepo.findAll();
-//
-//        return messages;
-//    }
-
-
     @PostMapping ("/main")
     public String add(
             @AuthenticationPrincipal User user,

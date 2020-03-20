@@ -1,15 +1,12 @@
 package edu.rimand.controller;
 
-import edu.rimand.domain.Message;
 import edu.rimand.domain.Role;
 import edu.rimand.domain.User;
-import edu.rimand.repository.MessageRepo;
 import edu.rimand.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.Map;
@@ -23,8 +20,6 @@ public class RegistrationController {
     public String registration(Map<String, Object> model) {
         return "registration";
     }
-
-
 
     @PostMapping("/registration")
     public String add(User user, Map<String, Object> model){//@RequestParam String username, @RequestParam String password, Map<String, Object> model) {
@@ -40,7 +35,4 @@ public class RegistrationController {
         userRepo.save(user);
         return "redirect:/login";
     }
-
-
-
 }
