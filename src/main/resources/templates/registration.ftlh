@@ -4,5 +4,5 @@
 <@c.page>
 Registration page
 <@l.login "/registration" />
-${message}
+${message!}
 </@c.page>

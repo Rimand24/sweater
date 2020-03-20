@@ -3,6 +3,7 @@
 
 <@c.page>
 <@l.logout/>
+    <span><a href="/user">userlist</a></span>
         <form method="post">
             <input type="text" name="text" placeholder="text here" />
             <input type="text" name="tag" placeholder="tag here">
@@ -11,7 +12,7 @@
         </form>
     <div>Message List</div>
     <form method="get" action="/main">
-        <input type="text" name="filter" value="${filter}">
+        <input type="text" name="filter" value="${filter!}">
         <button type="submit">Set Tag Filter</button>
     </form>
     <form method="get" action="/main">
