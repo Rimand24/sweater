@@ -45,8 +45,8 @@ public class UserService implements UserDetailsService {
         if(!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
                     "Hello, %s! \n Welcomw to Tweater/ Please visit next link to activate your account:"+
-                    "http://localhost:8080/activate/%s",
-                   // "http://"+address+":"+port+"/activate/%s",
+                   // "http://localhost:8080/activate/%s",
+                    "http://"+address+":"+port+"/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
                     );
