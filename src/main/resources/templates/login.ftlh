@@ -3,4 +3,5 @@
 
 <@c.page>
 <@l.login "/login" false/>
+    ${message!}
 </@c.page>
