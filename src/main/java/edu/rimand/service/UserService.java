@@ -4,6 +4,7 @@ import edu.rimand.domain.Role;
 import edu.rimand.domain.User;
 import edu.rimand.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +16,11 @@ import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
-    private static final String LINK = "http://localhost:8080/activate";
+    @Value("${server.address}")
+    private String address;
+    @Value("${server.port}")
+    private String port;
+
     @Autowired
     private UserRepo userRepo;
     @Autowired
@@ -39,7 +44,9 @@ public class UserService implements UserDetailsService {
 
         if(!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
-                    "Hello, %s! \n Welcomw to Tweater/ Please visit next link to activate your account:"+ LINK +"%s",
+                    "Hello, %s! \n Welcomw to Tweater/ Please visit next link to activate your account:"+
+                    "http://localhost:8080/activate/%s",
+                   // "http://"+address+":"+port+"/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
                     );
