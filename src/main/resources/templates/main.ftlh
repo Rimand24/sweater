@@ -1,9 +1,23 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
 
 <@c.page>
-<@l.logout/>
-    <span><a href="/user">userlist</a></span>
+    <div class="form-row">
+        <div class="form-group com-md-6">
+            <form method="get" action="/main" class="form-inline">
+                <input type="text" name="filter" class="form-control" value="${filter!}">
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Add new Message
+    </a>
+<div class="collapse" id="collapseList">
+    <div class="form-group">
+
+
+    </div>
         <form method="post" enctype="multipart/form-data">
             <input type="text" name="text" placeholder="text here" />
             <input type="text" name="tag" placeholder="tag here">
@@ -11,15 +25,8 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <button type="submit">Add</button>
         </form>
-    <div>Message List</div>
-    <form method="get" action="/main">
-        <input type="text" name="filter" value="${filter!}">
-        <button type="submit">Set Tag Filter</button>
-    </form>
-    <form method="get" action="/main">
-        <input type="text" name="filter">
-        <button type="submit">Set Author Filter</button>
-    </form>
+    </div>
+
 <#list messages as message>
     <div>
         <b>${message.id}</b>

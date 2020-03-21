@@ -1,8 +1,6 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-    <div>List of users</div>
-
     <table>
         <thead>
         <tr>
