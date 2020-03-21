@@ -31,7 +31,7 @@ public class MainController {
     }
 
     @GetMapping ("/main")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+    public String mainPage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Message> messages = messageRepo.findAll();
         if (filter != null && !filter.isEmpty()){
             messages = messageRepo.findByTag(filter);
@@ -44,7 +44,7 @@ public class MainController {
     }
 
     @PostMapping ("/main")
-    public String add(
+    public String postMessage(
             @AuthenticationPrincipal User user,
             @RequestParam String text,
             @RequestParam String tag,
