@@ -75,8 +75,10 @@ public class MainController {
                 file.transferTo(new File(uploadPath + "/" + resultFilename));
                 message.setFilename(resultFilename);
             }
+            model.addAttribute("message", message);
             messageRepo.save(message);
         }
+
         Iterable<Message> messages = messageRepo.findAll();
         model.addAttribute("messages", messages);
         return "main";
