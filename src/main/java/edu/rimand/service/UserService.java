@@ -86,6 +86,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateProfile(User user, String password, String email) {
+    //public void updateProfile(User user, String password, String passwordConfirm, String email) {
         String userEmail = user.getEmail();
         boolean isEmailChanged = (email != null && !email.equals(userEmail)) || (userEmail != null && !userEmail.equals(email));
         if (isEmailChanged){

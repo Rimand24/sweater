@@ -55,12 +55,14 @@ public class UserController {
     public String updateProfile(Model model,
                                 @AuthenticationPrincipal User user,
                                 @RequestParam String password,
+                                //@RequestParam String passwordConfirm,
                                 @RequestParam String email
     ){
+
+        user.setPasswordConfirm(user.getPassword()); //fixme
         userService.updateProfile(user, password, email);
+        //userService.updateProfile(user, password, passwordConfirm, email);
 
         return "redirect:/user/profile";
     }
-
-
 }
