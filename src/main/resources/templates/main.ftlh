@@ -19,7 +19,8 @@
 
             <div class="form-group">
                 <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
-                       value="<#if message??>${message.text}</#if>" name="text" placeholder="Enter text here" />
+<#--                       value="<#if message??>${message.text}</#if>" -->
+                       name="text" placeholder="Enter text here" />
                 <#if textError??>
                 <div class="invalid-feedback">
                     ${textError}
@@ -29,7 +30,8 @@
 
             <div class="form-group">
                 <input type="text" class="form-control"
-                       value="<#if message??>${message.tag}</#if>" name="tag" placeholder="tag here">
+<#--                       value="<#if message??>${message.tag}</#if>" -->
+                       name="tag" placeholder="tag here">
                 <#if tagError??>
                     <div class="invalid-feedback">
                         ${tagError}
