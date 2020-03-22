@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +27,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private MailSender mailSender;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepo.findByUsername(username);
@@ -40,6 +44,7 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
         if(!StringUtils.isEmpty(user.getEmail())){
@@ -86,7 +91,7 @@ public class UserService implements UserDetailsService {
             }
         }
         if (!StringUtils.isEmpty(password)){
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         userRepo.save(user);
         if(isEmailChanged) {
@@ -96,8 +101,7 @@ public class UserService implements UserDetailsService {
 
     private void sendActivationCode(User user) {
         String message = String.format(
-                "Hello, %s! \n Welcomw to Tweater/ Please visit next link to activate your account:"+
-                        // "http://localhost:8080/activate/%s",
+                "Hello, %s! \n Welcome to Tweater/ Please visit next link to activate your account:"+
                         "http://"+address+":"+port+"/activate/%s",
                 user.getUsername(),
                 user.getActivationCode()
