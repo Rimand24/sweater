@@ -2,7 +2,6 @@ package edu.rimand.controller;
 
 import edu.rimand.domain.Role;
 import edu.rimand.domain.User;
-import edu.rimand.repository.UserRepo;
 import edu.rimand.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
