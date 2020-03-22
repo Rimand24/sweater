@@ -20,7 +20,7 @@
                     <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
                            name="text" value="<#if message??>${messages.text}</#if>" placeholder="Enter text here" />
                     <#if textError??>
-                        <div class="invalid-feedback">${textError} </div>
+                        <div class="invalid-feedback">"${textError}" </div>
                     </#if>
                 </div>
                 <div class="form-group">
