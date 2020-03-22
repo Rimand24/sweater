@@ -10,32 +10,45 @@
         </div>
     </div>
 
-    <a class="btn btn-primary" data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseExample">
-        Add new Message
-    </a>
-    <div class="collapse" id="collapseList">
-        <div class="form-group mt-3">
-            <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
-                           name="text" value="<#if message??>${messages.text}</#if>" placeholder="Enter text here" />
-                    <#if textError??>
-                        <div class="invalid-feedback">"${textError}" </div>
-                    </#if>
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseList">
+    Add new Message
+</a>
+<div class="collapse <#if message??>show</#if>" id="collapseList">
+    <div class="form-group mt-3">
+        <form method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}"
+                       value="<#if message??>${message.text}</#if>" name="text" placeholder="Enter text here" />
+                <#if textError??>
+                <div class="invalid-feedback">
+                    ${textError}
                 </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="tag" placeholder="Tag">
-                </div>
+                </#if>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control"
+                       value="<#if message??>${message.tag}</#if>" name="tag" placeholder="tag here">
+                <#if tagError??>
+                    <div class="invalid-feedback">
+                        ${tagError}
+                    </div>
+                </#if>
+            </div>
+
                 <div class="form-group">
                     <div class="custom-file">
                         <input type="file" name="file" id="customFile" placeholder="choose">
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                 </div>
+
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Post</button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -58,7 +71,6 @@
             No message
         </#list>
     </div>
+
 </@c.page>
-
-
 
