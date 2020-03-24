@@ -30,7 +30,6 @@
 
             <div class="form-group">
                 <input type="text" class="form-control"
-<#--                       value="<#if message??>${message.tag}</#if>" -->
                        name="tag" placeholder="tag here">
                 <#if tagError??>
                     <div class="invalid-feedback">
