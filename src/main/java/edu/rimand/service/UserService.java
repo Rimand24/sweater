@@ -26,7 +26,6 @@ public class UserService implements UserDetailsService {
     private UserRepo userRepo;
     @Autowired
     private MailSender mailSender;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
