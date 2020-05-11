@@ -36,10 +36,10 @@ public class MainController {
         return "greeting";
     }
 
-    @GetMapping ("/main")
+    @GetMapping("/main")
     public String mainPage(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Message> messages = messageRepo.findAll();
-        if (filter != null && !filter.isEmpty()){
+        if (filter != null && !filter.isEmpty()) {
             messages = messageRepo.findByTag(filter);
         } else {
             messages = messageRepo.findAll();
@@ -49,7 +49,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping ("/main")
+    @PostMapping("/main")
     public String postMessage(
             @AuthenticationPrincipal User user,
             @Valid Message message,
@@ -58,7 +58,7 @@ public class MainController {
             Model model
     ) throws IOException {
         message.setAuthor(user);
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
             model.addAttribute("message", message);
