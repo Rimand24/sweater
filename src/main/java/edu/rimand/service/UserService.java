@@ -32,9 +32,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
-        if(user == null){
-            throw new UsernameNotFoundException("user not found");
-        }
+//        if(user == null){
+//            throw new UsernameNotFoundException("user not found");
+//        }
         return user;
     }
 
@@ -50,11 +50,27 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
 
-        if(!StringUtils.isEmpty(user.getEmail())){
-            sendActivationCode(user);
-        }
+        sendMessage(user);
+
         return true;
     }
+
+    private void sendMessage(User user) {
+                if(!StringUtils.isEmpty(user.getEmail())){
+            sendActivationCode(user);
+        }
+    }
+
+    private void sendActivationCode(User user) {
+        String message = String.format(
+                "Hello, %s! \n Welcome to Tweater/ Please visit next link to activate your account:"+
+                        "http://"+address+":"+port+"/activate/%s",
+                user.getUsername(),
+                user.getActivationCode()
+        );
+        mailSender.send(user.getEmail(), "Activation code", message);
+    }
+
 
     public boolean activateUser(String code) {
         User user = userRepo.findByActivationCode(code);
@@ -103,13 +119,5 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    private void sendActivationCode(User user) {
-        String message = String.format(
-                "Hello, %s! \n Welcome to Tweater/ Please visit next link to activate your account:"+
-                        "http://"+address+":"+port+"/activate/%s",
-                user.getUsername(),
-                user.getActivationCode()
-        );
-        mailSender.send(user.getEmail(), "Activation code", message);
-    }
+
 }

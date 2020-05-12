@@ -54,8 +54,9 @@ public class MainController {
             @AuthenticationPrincipal User user,
             @Valid Message message,
             BindingResult bindingResult,
-            @RequestParam("file") MultipartFile file,
-            Model model
+            Model model,
+            @RequestParam("file") MultipartFile file
+
     ) throws IOException {
         message.setAuthor(user);
         if (bindingResult.hasErrors()) {
