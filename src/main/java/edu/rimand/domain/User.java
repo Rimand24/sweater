@@ -17,17 +17,19 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotBlank(message = "Username can't be empty")
     private String username;
+
     @NotBlank(message = "Password can't be empty")
     private String password;
-    @Transient
-    //@NotBlank(message = "Password confirmation can't be empty")
-    private String passwordConfirm;
+
     private boolean active;
+
     @Email(message = "Email is not correct")
     @NotBlank(message = "Email can't be empty")
     private String email;
+
     private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -129,11 +131,4 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
 }
