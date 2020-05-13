@@ -25,10 +25,9 @@ public class MailSender {
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
 
-        System.out.println(mailTo);
-        System.out.println(subject);
-        System.out.println(message);
-        //fixme uncomment
-        //mailSender.send(mailMessage);
+//        System.out.println(mailTo);
+//        System.out.println(subject);
+//        System.out.println(message);
+        mailSender.send(mailMessage);
     }
 }
