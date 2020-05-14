@@ -3,11 +3,12 @@ package edu.rimand.Dto;
 import edu.rimand.domain.Role;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Value;
 
 import java.util.Set;
 
-@Getter
-@Setter
+
+@Value
 public class UserDto {
 
         private String username;

@@ -32,9 +32,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
-//        if(user == null){
-//            throw new UsernameNotFoundException("user not found");
-//        }
+        if(user == null){
+            throw new UsernameNotFoundException("user not found");
+        }
         return user;
     }
 
