@@ -6,7 +6,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 @Service
 public class MailSender {
@@ -25,9 +24,6 @@ public class MailSender {
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
 
-//        System.out.println(mailTo);
-//        System.out.println(subject);
-//        System.out.println(message);
         mailSender.send(mailMessage);
     }
 }
