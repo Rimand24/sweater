@@ -32,9 +32,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
-//        if(user == null){
-//            throw new UsernameNotFoundException("user not found");
-//        }
+        if(user == null){
+            throw new UsernameNotFoundException("user not found");
+        }
         return user;
     }
 
@@ -101,7 +101,6 @@ public class UserService implements UserDetailsService {
     }
 
     public void updateProfile(User user, String password, String email) {
-    //public void updateProfile(User user, String password, String passwordConfirm, String email) {
         String userEmail = user.getEmail();
         boolean isEmailChanged = (email != null && !email.equals(userEmail)) || (userEmail != null && !userEmail.equals(email));
         if (isEmailChanged){

@@ -1,6 +1,8 @@
 package edu.rimand.domain;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +13,8 @@ import java.util.Collection;
 import java.util.Set;
 
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name= "usr")
 public class User implements UserDetails {
@@ -20,16 +24,12 @@ public class User implements UserDetails {
 
     @NotBlank
     private String username;
-
     @NotBlank
     private String password;
-
     private Boolean active;
-
     @Email
     @NotBlank
     private String email;
-
     private String activationCode;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -54,7 +54,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive();
+        return active;
     }
 
     @Override
@@ -62,73 +62,7 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-
-
-
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
     }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getActivationCode() {
-        return activationCode;
-    }
-
-    public void setActivationCode(String activationCode) {
-        this.activationCode = activationCode;
-    }
-
 }
