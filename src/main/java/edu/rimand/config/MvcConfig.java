@@ -17,10 +17,18 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String pathPart = isWindows() ? "file:/" : "file://";
+        uploadPath = uploadPath.endsWith("/") ? uploadPath : uploadPath + "/";
+
         registry.addResourceHandler("/img/**")
-                .addResourceLocations("file:/" + uploadPath + "/"); //windows
-//        .addResourceLocations("file://" + uploadPath + "/"); //linux
+                .addResourceLocations(pathPart + uploadPath);
+
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+    }
+
+    private boolean isWindows(){
+        String OS = System.getProperty("os.name").toLowerCase();
+        return (OS.contains("win"));
     }
 }

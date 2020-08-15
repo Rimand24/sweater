@@ -21,13 +21,13 @@ public class MailSender {
         System.out.println("mailTo:" + mailTo);
         System.out.println("subject:" + subject);
         System.out.println("message:" + message);
-//        SimpleMailMessage mailMessage = new SimpleMailMessage();
-//
-//        mailMessage.setFrom(username);
-//        mailMessage.setTo(mailTo);
-//        mailMessage.setSubject(subject);
-//        mailMessage.setText(message);
-//
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        mailMessage.setFrom(username);
+        mailMessage.setTo(mailTo);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(message);
+
 //        mailSender.send(mailMessage);
     }
 }
