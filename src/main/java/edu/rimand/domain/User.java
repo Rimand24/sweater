@@ -22,13 +22,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank
+    @NotBlank (message = "username cannot be empty")
     private String username;
-    @NotBlank
+    @NotBlank (message = "password cannot be empty")
     private String password;
     private Boolean active;
-    @Email
-    @NotBlank
+    @Email (message = "email is not correct")
+    @NotBlank (message = "email cannot be empty")
     private String email;
     private String activationCode;
 
