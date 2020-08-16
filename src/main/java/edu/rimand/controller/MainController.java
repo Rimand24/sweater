@@ -53,8 +53,8 @@ public class MainController {
             BindingResult bindingResult,
             Model model,
             @RequestParam("file") MultipartFile file
-
     ) throws IOException {
+
         message.setAuthor(user);
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
@@ -73,7 +73,7 @@ public class MainController {
                 file.transferTo(new File(uploadPath + "/" + resultFilename));
                 message.setFilename(resultFilename);
             }
-            model.addAttribute("message", message);
+            model.addAttribute("message", null);
             messageRepo.save(message);
         }
 

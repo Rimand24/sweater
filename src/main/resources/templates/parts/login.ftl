@@ -1,5 +1,5 @@
 <#macro login path isRegisterForm>
-    <form action="${path}" method="post">
+    <form action="${path}" method="post" id="login-form">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">User Name:</label>
             <div class="col-sm-6">
@@ -30,12 +30,12 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Confirm password:</label>
                 <div class="col-sm-6">
-                    <input type="password" name="passwordConfirm"
-                           class="form-control ${(passwordConfirmError??)?string('is-invalid', '')}"
+                    <input type="password" name="password2"
+                           class="form-control ${(password2Error??)?string('is-invalid', '')}"
                            placeholder="Retype password" />
-                    <#if passwordConfirmError??>
+                    <#if password2Error??>
                         <div class="invalid-feedback">
-                            ${passwordConfirmError}
+                            ${password2Error}
                         </div>
                     </#if>
                 </div>
@@ -56,7 +56,25 @@
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
         <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
-        <button class="btn btn-primary" type="submit"><#if isRegisterForm>Create<#else>Sign In</#if></button>
+
+        <#if captchaError??>
+<#--            <div class="g-recaptcha" data-sitekey="6LdDhL8ZAAAAACFXU51PGdTPAnJUyxTJs5X_aW0s"></div>-->
+            <div class="alert alert-${messageType}" role="alert" >
+                ${captchaError}
+            </div>
+        </#if>
+
+        <button class="g-recaptcha btn btn-primary"
+                data-sitekey="6LdDhL8ZAAAAACFXU51PGdTPAnJUyxTJs5X_aW0s"
+                data-callback='onSubmit'
+                data-action='submit'>
+            <#if isRegisterForm>Create<#else>Sign In</#if>
+        </button>
+
+<#--        <button class="btn btn-primary" type="submit" >-->
+<#--            <#if isRegisterForm>Create<#else>Sign In</#if>-->
+<#--        </button>-->
+
     </form>
 </#macro>
 
