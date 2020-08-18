@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("profile")
-    public String getProfile(Model model, @AuthenticationPrincipal User user){
+    public String getProfile(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
         return "profile";
@@ -55,9 +55,38 @@ public class UserController {
     public String updateProfile(Model model,
                                 @AuthenticationPrincipal User user,
                                 @RequestParam String password,
-                                @RequestParam String email){
+                                @RequestParam String email) {
 
         userService.updateProfile(user, password, email);
         return "redirect:/user/profile";
+    }
+
+    @GetMapping("/subscribe/{user}")
+    public String subscribe(@AuthenticationPrincipal User currentUser, @PathVariable User user) {
+        System.out.println(user.getId());
+        userService.subscribe(currentUser, user);
+        System.out.println("redirect:/user-messages/" + user.getId());
+        return "redirect:/user-messages/" + user.getId();
+    }
+
+    @GetMapping("/unsubscribe/{user}")
+    public String unsubscribe(@AuthenticationPrincipal User currentUser, @PathVariable User user) {
+        userService.unsubscribe(currentUser, user);
+        return "redirect:/user-messages/" + user.getId();
+    }
+
+    @GetMapping("{type}/{user}/list")
+    public String userList(@PathVariable String type, @PathVariable User user, Model model) {
+
+        if ("subscriptions".equals(type)) {
+            model.addAttribute("users", user.getSubscriptions());
+        } else {
+            model.addAttribute("users", user.getSubscribers());
+        }
+
+        model.addAttribute("type", type);
+        model.addAttribute("userChannel", user);
+
+        return "subscriptions";
     }
 }

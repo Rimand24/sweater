@@ -83,8 +83,16 @@ public class MainController {
                                @RequestParam(required = false) Message message,
                                Model model) {
 
+        if(user == null){
+            return "redirect:/user-messages/"+currentUser.getId();
+        }
+
         Set<Message> messages = user.getMessages();
 
+        model.addAttribute("userChannel", user);
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", Objects.equals(currentUser, user));

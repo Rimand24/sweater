@@ -9,27 +9,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name= "usr")
+@Table(name = "usr")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank (message = "username cannot be empty")
+    @NotBlank(message = "username cannot be empty")
     private String username;
-    @NotBlank (message = "password cannot be empty")
+    @NotBlank(message = "password cannot be empty")
     private String password;
     private Boolean active;
-    @Email (message = "email is not correct")
-    @NotBlank (message = "email cannot be empty")
+    @Email(message = "email is not correct")
+    @NotBlank(message = "email cannot be empty")
     private String email;
     private String activationCode;
 
@@ -38,8 +36,23 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @OneToMany (mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Message> messages;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "channel_id")},
+            inverseJoinColumns = {@JoinColumn(name = "subscriber_id")}
+    )
+    private Set<User> subscribers = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "subscriber_id")},
+            inverseJoinColumns = {@JoinColumn(name = "channel_id")}
+    )
+    private List<User> subscriptions;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -66,7 +79,7 @@ public class User implements UserDetails {
         return getRoles();
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
 
