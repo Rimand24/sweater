@@ -4,6 +4,7 @@ import edu.rimand.domain.Message;
 import edu.rimand.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,6 @@ public interface MessageRepo extends CrudRepository<Message, Long> {
 
     Page<Message> findAll(Pageable pageable);
 
-    Page<Message> findByAuthor(User user, Pageable pageable);
+    @Query("from Message m where m.author = :author ")
+    Page<Message> findByUser(Pageable pageable, User author);
 }

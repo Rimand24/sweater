@@ -3,6 +3,7 @@ package edu.rimand.controller;
 import edu.rimand.domain.Message;
 import edu.rimand.domain.User;
 import edu.rimand.repository.MessageRepo;
+import edu.rimand.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 
@@ -33,6 +33,9 @@ import java.util.UUID;
 public class MessageController {
     @Autowired
     private MessageRepo messageRepo;
+
+    @Autowired
+    private MessageService messageService;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -48,13 +51,8 @@ public class MessageController {
             Model model,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<Message> page;
+        Page<Message> page = messageService.messageList(pageable, filter);
 
-        if (filter != null && !filter.isEmpty()) {
-            page = messageRepo.findByTag(filter, pageable);
-        } else {
-            page = messageRepo.findAll(pageable);
-        }
 
         model.addAttribute("page", page);
         model.addAttribute("url", "/main");
@@ -70,6 +68,7 @@ public class MessageController {
             Model model,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+
         message.setAuthor(user);
 
         if (bindingResult.hasErrors()) {
@@ -85,34 +84,32 @@ public class MessageController {
         }
 
         Iterable<Message> messages = messageRepo.findAll();
-
         model.addAttribute("messages", messages);
-
         return "redirect:/main";
-//        return "main";
     }
 
 
-    @GetMapping("user-messages/{user}")
+    @GetMapping("user-messages/{author}")
     public String userMessages(@AuthenticationPrincipal User currentUser,
-                               @PathVariable User user,
+                               @PathVariable User author,
                                @RequestParam(required = false) Message message,
+                               @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
                                Model model) {
 
-        if (user == null) {
+        if (author == null) {
             return "redirect:/user-messages/" + currentUser.getId();
         }
 
-        Set<Message> messages = user.getMessages();
+        Page<Message> page = messageService.userListForUser(pageable, author);
 
-        model.addAttribute("userChannel", user);
-        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
-        model.addAttribute("subscribersCount", user.getSubscribers().size());
-        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
-        model.addAttribute("messages", messages);
+        model.addAttribute("userChannel", author);
+        model.addAttribute("subscriptionsCount", author.getSubscriptions().size());
+        model.addAttribute("subscribersCount", author.getSubscribers().size());
+        model.addAttribute("isSubscriber", author.getSubscribers().contains(currentUser));
+        model.addAttribute("page", page);
         model.addAttribute("message", message);
-        model.addAttribute("isCurrentUser", Objects.equals(currentUser, user));
-
+        model.addAttribute("isCurrentUser", Objects.equals(currentUser, author));
+        model.addAttribute("url", "/user-messages/" + author.getId());
         return "userMessages";
     }
 
@@ -135,7 +132,6 @@ public class MessageController {
 
         saveFile(message, file);
         messageRepo.save(message);
-
         return "redirect:/user-messages/" + userId;
     }
 
@@ -143,16 +139,13 @@ public class MessageController {
     private void saveFile(Message message, MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
-
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
             }
-
             String uuid = UUID.randomUUID().toString();
             String resultFilename = uuid + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFilename));
             message.setFilename(resultFilename);
         }
-
     }
 }
