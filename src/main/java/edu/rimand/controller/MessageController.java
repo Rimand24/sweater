@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +38,9 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private EntityManager em;
+
     @Value("${upload.path}")
     private String uploadPath;
 
@@ -52,7 +56,6 @@ public class MessageController {
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Page<Message> page = messageService.messageList(pageable, filter);
-
 
         model.addAttribute("page", page);
         model.addAttribute("url", "/main");
