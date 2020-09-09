@@ -22,16 +22,13 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
 
+    private static final String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
     @Value("${recaptcha.secret}")
     private String captchaSecret;
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private RestTemplate restTemplate;
-
-    private static final String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -46,16 +43,16 @@ public class RegistrationController {
                       Model model) {
 
         boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirm);
-        if(isConfirmEmpty){
+        if (isConfirmEmpty) {
             model.addAttribute("password2Error", "Password confirmation can't be empty");
         }
 
-        if(user.getPassword() != null && !user.getPassword().equals(passwordConfirm)){
+        if (user.getPassword() != null && !user.getPassword().equals(passwordConfirm)) {
             model.addAttribute("password2Error", "password are different");
             return "registration";
         }
 
-        if (isConfirmEmpty || bindingResult.hasErrors()){
+        if (isConfirmEmpty || bindingResult.hasErrors()) {
             Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errors);
             return "registration";
@@ -64,7 +61,7 @@ public class RegistrationController {
         String url = String.format(CAPTCHA_URL, captchaSecret, captchaResponse);
         CaptchaResponseDto responseDto = restTemplate.postForObject(url, Collections.EMPTY_LIST, CaptchaResponseDto.class);
 
-        if (responseDto==null || !responseDto.isSuccess()){
+        if (responseDto == null || !responseDto.isSuccess()) {
             model.addAttribute("captchaError", "Fill captcha");
             return "registration";
         }
