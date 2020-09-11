@@ -91,7 +91,6 @@ public class MessageController {
         return "redirect:/main";
     }
 
-
     @GetMapping("user-messages/{author}")
     public String userMessages(@AuthenticationPrincipal User currentUser,
                                @PathVariable User author,
