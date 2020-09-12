@@ -1,5 +1,6 @@
 package edu.rimand.controller;
 
+import edu.rimand.Dto.MessageDto;
 import edu.rimand.domain.Message;
 import edu.rimand.domain.User;
 import edu.rimand.repository.MessageRepo;
@@ -15,11 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -51,11 +53,12 @@ public class MessageController {
 
     @GetMapping("/main")
     public String mainPage(
+            @AuthenticationPrincipal User user,
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Page<Message> page = messageService.messageList(pageable, filter);
+        Page<MessageDto> page = messageService.messageList(pageable, filter, user);
 
         model.addAttribute("page", page);
         model.addAttribute("url", "/main");
@@ -102,7 +105,7 @@ public class MessageController {
             return "redirect:/user-messages/" + currentUser.getId();
         }
 
-        Page<Message> page = messageService.userListForUser(pageable, author);
+        Page<MessageDto> page = messageService.userListForUser(pageable, author, currentUser);
 
         model.addAttribute("userChannel", author);
         model.addAttribute("subscriptionsCount", author.getSubscriptions().size());
@@ -137,6 +140,25 @@ public class MessageController {
         return "redirect:/user-messages/" + userId;
     }
 
+    @GetMapping("/messages/{message}/like")
+    public String like(
+            @AuthenticationPrincipal User user,
+            @PathVariable Message message,
+            RedirectAttributes redirectAttributes,
+            @RequestHeader(required = false) String referer
+    ) {
+        Set<User> likes = message.getLikes();
+        if (likes.contains(user)) {
+            likes.remove(user);
+        } else {
+            likes.add(user);
+        }
+
+        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
+        components.getQueryParams().forEach(redirectAttributes::addAttribute);
+
+        return "redirect:" + components.getPath();
+    }
 
     private void saveFile(Message message, MultipartFile file) throws IOException {
         if (file != null && !file.getOriginalFilename().isEmpty()) {

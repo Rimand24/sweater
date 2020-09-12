@@ -1,6 +1,6 @@
 package edu.rimand.service;
 
-import edu.rimand.domain.Message;
+import edu.rimand.Dto.MessageDto;
 import edu.rimand.domain.User;
 import edu.rimand.repository.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ public class MessageService {
     @Autowired
     private MessageRepo messageRepo;
 
-    public Page<Message> messageList(Pageable pageable, String filter) {
+    public Page<MessageDto> messageList(Pageable pageable, String filter, User user) {
         if (filter != null && !filter.isEmpty()) {
-            return messageRepo.findByTag(filter, pageable);
+            return messageRepo.findByTag(filter, pageable, user);
         } else {
-            return messageRepo.findAll(pageable);
+            return messageRepo.findAll(pageable, user);
         }
     }
 
-    public Page<Message> userListForUser(Pageable pageable, User author) {
-        return messageRepo.findByUser(pageable, author);
+    public Page<MessageDto> userListForUser(Pageable pageable, User author, User user) {
+        return messageRepo.findByUser(pageable, author, user);
     }
 }
