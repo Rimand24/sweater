@@ -1,6 +1,6 @@
 package edu.rimand.controller;
 
-import edu.rimand.Dto.MessageDto;
+import edu.rimand.domain.Dto.MessageDto;
 import edu.rimand.domain.Message;
 import edu.rimand.domain.User;
 import edu.rimand.repository.MessageRepo;

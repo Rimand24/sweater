@@ -1,6 +1,6 @@
 package edu.rimand.repository;
 
-import edu.rimand.Dto.MessageDto;
+import edu.rimand.domain.Dto.MessageDto;
 import edu.rimand.domain.Message;
 import edu.rimand.domain.User;
 import org.springframework.data.domain.Page;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepo extends CrudRepository<Message, Long> {
-    @Query("select new edu.rimand.Dto.MessageDto(" +
+    @Query("select new edu.rimand.domain.Dto.MessageDto(" +
             " m, " +
             " count (ml), " +
             " sum(case when ml = :user then 1 else 0 end) > 0" +
@@ -21,7 +21,7 @@ public interface MessageRepo extends CrudRepository<Message, Long> {
     )
     Page<MessageDto> findAll(Pageable pageable, @Param("user") User user);
 
-    @Query("select new edu.rimand.Dto.MessageDto(" +
+    @Query("select new edu.rimand.domain.Dto.MessageDto(" +
             " m, " +
             " count (ml), " +
             " sum(case when ml = :user then 1 else 0 end) > 0" +
@@ -30,7 +30,7 @@ public interface MessageRepo extends CrudRepository<Message, Long> {
     )
     Page<MessageDto> findByTag(@Param("tag") String tag, Pageable pageable, @Param("user") User user);
 
-    @Query("select new edu.rimand.Dto.MessageDto(" +
+    @Query("select new edu.rimand.domain.Dto.MessageDto(" +
             " m, " +
             " count (ml), " +
             " sum(case when ml = :user then 1 else 0 end) > 0" +

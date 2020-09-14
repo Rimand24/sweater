@@ -1,6 +1,6 @@
 package edu.rimand.controller;
 
-import edu.rimand.Dto.CaptchaResponseDto;
+import edu.rimand.domain.Dto.CaptchaResponseDto;
 import edu.rimand.domain.User;
 import edu.rimand.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

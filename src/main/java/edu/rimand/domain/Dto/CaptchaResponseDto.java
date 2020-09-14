@@ -1,4 +1,4 @@
-package edu.rimand.Dto;
+package edu.rimand.domain.Dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

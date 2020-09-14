@@ -1,6 +1,6 @@
 package edu.rimand.service;
 
-import edu.rimand.Dto.MessageDto;
+import edu.rimand.domain.Dto.MessageDto;
 import edu.rimand.domain.User;
 import edu.rimand.repository.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;

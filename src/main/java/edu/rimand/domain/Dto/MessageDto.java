@@ -1,4 +1,4 @@
-package edu.rimand.Dto;
+package edu.rimand.domain.Dto;
 
 import edu.rimand.domain.Message;
 import edu.rimand.domain.User;
