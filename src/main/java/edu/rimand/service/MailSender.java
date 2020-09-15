@@ -28,6 +28,7 @@ public class MailSender {
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
 
+
 //        mailSender.send(mailMessage);
     }
 }
