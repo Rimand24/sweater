@@ -115,6 +115,7 @@ public class MessageController {
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", Objects.equals(currentUser, author));
         model.addAttribute("url", "/user-messages/" + author.getId());
+
         return "userMessages";
     }
 
