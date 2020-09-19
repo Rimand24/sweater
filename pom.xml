@@ -16,12 +16,10 @@
 
     <dependencies>
         <!--    MVC     -->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <!--       view template   -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,11 +31,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-jdbc</artifactId>
         </dependency>
+
         <!--        EMAIL       -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,7 +43,6 @@
         </dependency>
 
         <!--    DATA    -->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -57,16 +54,17 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+        <!--        db migration    -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <!--        utility    -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.flywaydb</groupId>-->
-<!--            <artifactId>flyway-core</artifactId>-->
-<!--        </dependency>-->
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -92,14 +90,12 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
-
     </dependencies>
+
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
-
 
     <build>
         <finalName>${project.artifactId}</finalName>
@@ -109,7 +105,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-
     </build>
 
 </project>
