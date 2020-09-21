@@ -58,7 +58,6 @@
         <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
 
         <#if captchaError??>
-<#--            <div class="g-recaptcha" data-sitekey="6LdDhL8ZAAAAACFXU51PGdTPAnJUyxTJs5X_aW0s"></div>-->
             <div class="alert alert-${messageType}" role="alert" >
                 ${captchaError}
             </div>
@@ -70,10 +69,6 @@
                 data-action='submit'>
             <#if isRegisterForm>Create<#else>Sign In</#if>
         </button>
-
-<#--        <button class="btn btn-primary" type="submit" >-->
-<#--            <#if isRegisterForm>Create<#else>Sign In</#if>-->
-<#--        </button>-->
 
     </form>
 </#macro>

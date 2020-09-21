@@ -2,13 +2,6 @@
 
 <@c.page>
     <h3>${userChannel.username}</h3>
-<#--    <#if !isCurrentUser>-->
-<#--        <#if isSubscriber>-->
-<#--            <a class="btn btn-warning" href="/user/unsubscribe/${userChannel.id}">Unsubscribe</a>-->
-<#--        <#else>-->
-<#--            <a class="btn btn-info" href="/user/subscribe/${userChannel.id}">Subscribe</a>-->
-<#--        </#if>-->
-<#--    </#if>-->
     <#if !isCurrentUser>
         <#if isSubscriber>
             <a class="btn btn-info" href="/user/unsubscribe/${userChannel.id}">Unsubscribe</a>
