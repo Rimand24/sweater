@@ -48,7 +48,7 @@ public class MessageController {
 
     @GetMapping("/")
     public String greeting(Model model) {
-        return "greeting";
+        return "redirect:/main";
     }
 
     @GetMapping("/main")
